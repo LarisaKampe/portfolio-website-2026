@@ -1,0 +1,660 @@
+/* ═══════════════════════════════════════════════════
+   LARISA KAMPE — PORTFOLIO  /  style.css
+   ═══════════════════════════════════════════════════ */
+
+/* ─── RESET & BASE ─────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Sidebar widths */
+  --sb-w: 64px;
+  --sb-w-open: 168px;
+
+  /* Colours */
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #999999;
+  --card: #f2f2f2;
+  --card-hover: #e9e9e9;
+  --border: #e5e5e5;
+  --sidebar-bg: #fafafa;
+
+  /* Shape */
+  --r: 12px;
+
+  /* Animation */
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.28s;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sb-w);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  transition: width var(--dur) var(--ease);
+  overflow: hidden;
+}
+
+.sidebar:hover {
+  width: var(--sb-w-open);
+}
+
+.sidebar:hover .s-label {
+  opacity: 1;
+  transition: 0.1s;
+}
+
+/* Logo */
+.s-logo {
+  display: flex;
+  align-items: center;
+  margin: 1.7rem 0 1.7rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.s-logo img {
+  width: auto;
+  height: 32px;
+  display: block;
+}
+
+/* Nav list */
+.s-nav {
+  list-style: none;
+  flex: 1;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.s-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 22px;
+  cursor: pointer;
+  color: #c0c0c0;
+  transition: color 0.16s;
+  white-space: nowrap;
+  min-width: var(--sb-w-open);
+  user-select: none;
+}
+
+.s-item:hover {
+  color: var(--fg);
+}
+
+.s-item.active {
+  color: var(--fg);
+}
+
+/* Icon wrapper */
+.s-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.s-label {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+/* Divider */
+.s-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+  flex-shrink: 0;
+}
+
+/* Social links */
+.s-social {
+  list-style: none;
+  padding: 4px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.s-social a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 22px;
+  color: #c0c0c0;
+  text-decoration: none;
+  transition: color 0.16s;
+  white-space: nowrap;
+  min-width: var(--sb-w-open);
+}
+
+.s-social a:hover {
+  color: var(--fg);
+}
+
+.s-social .s-label {
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════
+   MAIN CONTENT AREA
+   ═══════════════════════════════════════════════════ */
+.main {
+  margin-left: var(--sb-w);
+  flex: 1;
+  padding: 54px 80px 100px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  max-width: calc(100vw - var(--sb-w));
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE VISIBILITY
+   ═══════════════════════════════════════════════════ */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════ */
+.page-title {
+  font-size: clamp(40px, 5.5vw, 62px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.page-desc {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 700px;
+  margin-bottom: 42px;
+  color: var(--fg);
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════════════════════
+   HOMEPAGE — SKILL CARDS
+   ═══════════════════════════════════════════════════ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+.skill-card {
+  background: var(--card);
+  border-radius: var(--r);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.16s,
+    transform 0.18s var(--ease);
+  line-height: 1.35;
+  user-select: none;
+}
+
+.skill-card:hover {
+  background: var(--card-hover);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════
+   PROJECT GRID
+   ═══════════════════════════════════════════════════ */
+.proj-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.proj-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.proj-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.proj-card {
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease);
+  outline: 2.5px solid transparent;
+  outline-offset: 0;
+}
+
+.proj-card:hover {
+  transform: translateY(-2px);
+}
+
+.proj-card.selected {
+  outline-color: var(--fg);
+}
+
+.proj-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.proj-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.proj-meta {
+  padding: 12px 14px 16px;
+}
+
+.proj-name {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.proj-short {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════
+   PROJECT DETAIL PANEL
+   ═══════════════════════════════════════════════════ */
+.proj-detail {
+  margin-top: 4px;
+}
+
+.proj-detail-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.proj-detail-desc {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 680px;
+  margin-bottom: 22px;
+}
+
+/* Media area — image or video */
+.proj-detail-media {
+  width: 100%;
+  height: auto;
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.proj-detail-media img,
+.proj-detail-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Prev / Next buttons */
+.proj-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  transition: background 0.14s;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.nav-btn:hover {
+  background: var(--card);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   CLIENTS CAROUSEL
+   ═══════════════════════════════════════════════════ */
+.clients-section {
+  margin-bottom: 52px;
+}
+
+.clients-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.clients-track {
+  flex: 1;
+  overflow: hidden;
+}
+
+.clients-inner {
+  display: flex;
+  gap: 14px;
+  transition: transform 0.32s var(--ease);
+}
+
+.client-card {
+  flex-shrink: 0;
+  border-radius: var(--r);
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.client-card img {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.carousel-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  flex-shrink: 0;
+  transition: background 0.14s;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.carousel-btn:hover {
+  background: var(--card);
+}
+
+.carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   HOME — ABOUT & CONTACT SECTIONS
+   ═══════════════════════════════════════════════════ */
+.home-about {
+  margin-bottom: 52px;
+}
+
+.home-about p,
+.home-contact p {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 680px;
+  margin-bottom: 12px;
+}
+
+.home-contact p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Email button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: "Outfit", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  margin-top: 14px;
+  transition: background 0.14s;
+}
+
+.btn:hover {
+  background: var(--card);
+}
+
+/* ═══════════════════════════════════════════════════
+   ABOUT ME PAGE
+   ═══════════════════════════════════════════════════ */
+.about-subheading {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.about-body {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 680px;
+  margin-bottom: 14px;
+}
+
+.about-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--card);
+  border-radius: var(--r);
+  margin-top: 28px;
+  overflow: hidden;
+}
+
+.about-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL TO TOP
+   ═══════════════════════════════════════════════════ */
+.scroll-top {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--fg);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.2s var(--ease);
+  z-index: 150;
+}
+
+.scroll-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-top:hover {
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════
+   UTILITY
+   ═══════════════════════════════════════════════════ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    padding: 40px 20px 100px;
+    max-width: 100vw;
+  }
+
+  /* Bottom bar — collapsed to just the logo height */
+  .sidebar {
+    inset: auto 0 0 0;
+    width: 100%;
+    flex-direction: column-reverse; /* logo stays at bottom, nav panel above */
+    max-height: var(--sb-w);
+    height: auto;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    transition: max-height 0.35s var(--ease);
+    overflow: hidden;
+  }
+
+  /* Disable the desktop hover-expand */
+  .sidebar:hover {
+    width: 100%;
+  }
+
+  /* Expanded state — triggered by JS */
+  .sidebar.nav-open {
+    max-height: 540px;
+  }
+
+  /* Logo bar always visible at the bottom */
+  .s-logo {
+    height: var(--sb-w);
+    width: 100%;
+    min-width: unset;
+    justify-content: center;
+    padding: 0 20px;
+    border-top: 1px solid var(--border); /* separator between nav and logo bar */
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  /* Nav items full-width rows */
+  .s-nav,
+  .s-social {
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .s-item,
+  .s-social a {
+    min-width: unset;
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  /* Labels always visible in the open panel */
+  .sidebar .s-label {
+    opacity: 1;
+    transition: none;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .proj-grid.cols-3 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
