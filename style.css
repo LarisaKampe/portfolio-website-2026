@@ -1214,6 +1214,8 @@ body {
     min-width: unset;
     width: 100%;
     padding: 12px 20px;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Labels always visible in the open panel */

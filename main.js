@@ -33,7 +33,11 @@ const state = {
   clientsOffset: 0,
 };
 
-const CLIENTS_VISIBLE = 4;
+// Fewer, larger client cards on mobile — matches the site's one
+// responsive breakpoint (see the 768px media query in style.css).
+function getClientsVisible() {
+  return window.innerWidth <= 768 ? 2 : 4;
+}
 
 /* ─── HELPERS ───────────────────────────────────── */
 function icon(key) {
@@ -431,7 +435,10 @@ function buildSidebar() {
     li.className = "s-item";
     li.dataset.page = item.key;
     li.innerHTML = `${icon(item.key)}<span class="s-label">${item.label}</span>`;
-    li.addEventListener("click", () => navigate(item.key));
+    li.addEventListener("click", () => {
+      navigate(item.key);
+      if (window.innerWidth <= 768) sidebar.classList.remove("nav-open");
+    });
     navEl.appendChild(li);
   });
 
@@ -460,6 +467,9 @@ function buildSidebar() {
     if (!s.href.startsWith("mailto")) a.target = "_blank";
     a.rel = "noopener noreferrer";
     a.innerHTML = `${icon(s.key)}<span class="s-label">${s.label}</span>`;
+    a.addEventListener("click", () => {
+      if (window.innerWidth <= 768) sidebar.classList.remove("nav-open");
+    });
     li.appendChild(a);
     socialEl.appendChild(li);
   });
@@ -796,11 +806,16 @@ function updateClientsCarousel() {
   if (!inner || !track) return;
 
   const totalClients = DATA.clients.length;
+  const visible = getClientsVisible();
   const gap = 14;
+
+  // Clamp offset in case the visible count changed (e.g. on resize)
+  const max = Math.max(0, totalClients - visible);
+  state.clientsOffset = Math.max(0, Math.min(max, state.clientsOffset));
 
   // Calculate card width based on track and visible count
   const trackW = track.offsetWidth;
-  const cardW = (trackW - gap * (CLIENTS_VISIBLE - 1)) / CLIENTS_VISIBLE;
+  const cardW = (trackW - gap * (visible - 1)) / visible;
 
   // Apply width to each client card
   inner.querySelectorAll(".client-card").forEach((card) => {
@@ -813,12 +828,11 @@ function updateClientsCarousel() {
   const prevBtn = document.getElementById("clients-prev");
   const nextBtn = document.getElementById("clients-next");
   if (prevBtn) prevBtn.disabled = state.clientsOffset === 0;
-  if (nextBtn)
-    nextBtn.disabled = state.clientsOffset >= totalClients - CLIENTS_VISIBLE;
+  if (nextBtn) nextBtn.disabled = state.clientsOffset >= max;
 }
 
 function clientsScroll(dir) {
-  const max = DATA.clients.length - CLIENTS_VISIBLE;
+  const max = Math.max(0, DATA.clients.length - getClientsVisible());
   state.clientsOffset = Math.max(0, Math.min(max, state.clientsOffset + dir));
   updateClientsCarousel();
 }
