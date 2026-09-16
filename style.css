@@ -274,10 +274,6 @@ body {
   margin-bottom: 40px;
 }
 
-.proj-grid.cols-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .proj-grid.cols-4 {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -333,23 +329,64 @@ body {
    PROJECT DETAIL PANEL
    ═══════════════════════════════════════════════════ */
 .proj-detail {
-  margin-top: 4px;
+  margin: 4px auto 0;
+  max-width: 1100px; /* keeps case studies readable on wide monitors */
 }
 
 .proj-detail-title {
-  font-size: 22px;
+  font-size: 42px;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
 .proj-detail-desc {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.72;
-  max-width: 680px;
   margin-bottom: 22px;
 }
 
-/* Media area — image or video */
+/* Live site / repo links — now the closing CTA of the case study */
+.proj-detail-links {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.btn-detail {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--dur) var(--ease);
+}
+
+.btn-detail.btn-primary {
+  background: var(--fg);
+  color: var(--bg);
+  border: 1px solid var(--fg);
+}
+
+.btn-detail.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-detail.btn-outline {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+
+.btn-detail.btn-outline:hover {
+  background: var(--card);
+}
+
+/* Media area — single image or video */
 .proj-detail-media {
   width: 100%;
   height: auto;
@@ -364,6 +401,540 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Stacked gallery — ordered media items (e.g. video then image) */
+.proj-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.proj-gallery-item {
+  width: 100%;
+  height: auto;
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.proj-gallery-item img,
+.proj-gallery-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Case-study context blurb */
+.proj-detail-context {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* Shared subheading for palette block */
+.proj-subheading {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* Overview grid — short labeled Q&A blocks (what/how/role/goal) */
+.proj-overview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 40px;
+  margin: 8px 0 36px;
+}
+
+.overview-item p {
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.overview-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.overview-list li {
+  padding-left: 16px;
+  position: relative;
+}
+
+.overview-list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+/* Process steps — colored pill row */
+.proj-process {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.process-pill {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Research & discovery — competitive analysis + interview findings */
+.proj-research {
+  margin-bottom: 36px;
+}
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 40px;
+  margin-bottom: 20px;
+}
+
+.research-col p {
+  font-size: 14px;
+  line-height: 1.72;
+  margin-bottom: 14px;
+}
+
+.research-findings {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.research-findings li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.research-findings li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+.research-quote {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.5;
+  font-style: italic;
+  padding: 20px 26px;
+  border-left: 3px solid var(--fg);
+  margin-top: 4px;
+}
+
+/* Persona cards — photo, quote, demographics, goals, device usage,
+   motivations, frustrations, personality tags */
+.proj-personas {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin: 8px 0 36px;
+}
+
+.persona-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 28px;
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.persona-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--card-hover);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.persona-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.persona-quote {
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.persona-name {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.persona-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 20px;
+  font-size: 12.5px;
+  margin-bottom: 20px;
+}
+
+.persona-meta strong {
+  font-weight: 600;
+}
+
+.persona-cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 32px;
+  margin-bottom: 18px;
+}
+
+.persona-cols.single {
+  grid-template-columns: 1fr;
+}
+
+.persona-cols h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.persona-cols ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.persona-cols ul li::before {
+  content: "– ";
+}
+
+.device-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  margin-bottom: 6px;
+}
+
+.device-dots {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.device-dots .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: inline-block;
+}
+
+.persona-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.persona-tag {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Labeled supporting images — sitemaps, wireframes, mood boards,
+   UI-kit sheets, photography direction */
+.proj-artifacts {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin: 8px 0 36px;
+}
+
+.proj-artifact-caption {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 680px;
+  margin-bottom: 14px;
+}
+
+.proj-artifact-media {
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.proj-artifact-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Language & tone of voice */
+.proj-tone {
+  margin-bottom: 36px;
+}
+
+.proj-tone p {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 680px;
+  margin-bottom: 18px;
+}
+
+.tone-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tone-tag {
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Palette + typography — universal bottom sections, same treatment
+   as your original design-system slide but sized to be legible
+   in-page rather than crammed into one static image. */
+.proj-palette,
+.proj-typography {
+  margin: 8px 0 40px;
+}
+
+.palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.palette-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 108px;
+}
+
+.palette-color {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.palette-label {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  text-align: center;
+}
+
+.type-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.type-card {
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 24px 16px;
+  width: 128px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.type-sample {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.type-label {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.type-label span {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* Universal device mockup — top of every UI/UX case study */
+.proj-mockup {
+  width: 100%;
+  border-radius: var(--r);
+  overflow: hidden;
+  margin: 20px 0 32px;
+}
+
+.proj-mockup img,
+.proj-mockup video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Alternating text + detail-crop highlight rows */
+.proj-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin: 12px 0 40px;
+}
+
+.proj-highlight {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+.proj-highlight.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.proj-highlight.media-left {
+  grid-template-areas: "media text";
+}
+
+.proj-highlight.media-right {
+  grid-template-areas: "text media";
+}
+
+.proj-highlight-text {
+  grid-area: text;
+}
+
+.proj-highlight-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.proj-highlight-text p {
+  font-size: 16px;
+  line-height: 1.75;
+  max-width: 480px;
+}
+
+.proj-highlight-media {
+  grid-area: media;
+  background: var(--white);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease);
+}
+
+.proj-highlight-media:hover {
+  transform: translateY(-3px);
+}
+
+.proj-highlight-media img,
+.proj-highlight-media video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Walkthrough rows show full phone screens (portrait), not landscape
+   detail crops — cap and center them instead of letting width:100%
+   blow a tall screenshot out to an oversized row. */
+.proj-walkthrough .proj-highlight-media {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proj-walkthrough .proj-highlight-media img,
+.proj-walkthrough .proj-highlight-media video {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .proj-highlight,
+  .proj-highlight.media-left,
+  .proj-highlight.media-right {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "media"
+      "text";
+    gap: 16px;
+  }
+
+  .proj-overview,
+  .research-grid,
+  .persona-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .persona-card {
+    grid-template-columns: 1fr;
+  }
+
+  .persona-photo {
+    aspect-ratio: 16 / 10;
+  }
+
+  .persona-meta {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Prev / Next buttons */
@@ -654,7 +1225,7 @@ body {
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .proj-grid.cols-3 {
+  .proj-grid.cols-4 {
     grid-template-columns: repeat(1, 1fr);
   }
 }
