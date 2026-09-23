@@ -647,7 +647,7 @@ function buildHomePage() {
 }
 
 /* ─── CATEGORY PAGE ─────────────────────────────── */
-function renderCategoryPage(key) {
+function renderCategoryPage(key, scrollToProject = false) {
   const page = document.getElementById("page-" + key);
   if (!page) return;
 
@@ -689,7 +689,7 @@ function renderCategoryPage(key) {
     `;
     card.addEventListener("click", () => {
       state.selectedProject[key] = proj.id;
-      renderCategoryPage(key);
+      renderCategoryPage(key, true);
     });
     grid.appendChild(card);
   });
@@ -792,6 +792,12 @@ function renderCategoryPage(key) {
 
   projectSection.appendChild(detail);
   page.appendChild(projectSection);
+
+  // Picking a card from the grid jumps straight to its detail panel —
+  // otherwise it's easy to not notice the page scrolled past the top.
+  if (scrollToProject) {
+    projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   // Animate highlight rows in as they scroll into view
   initHighlightAnimations();
