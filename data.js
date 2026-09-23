@@ -69,6 +69,13 @@ const DATA = {
      Optional case-study fields (all UI/UX projects — early slots):
        context     — one-paragraph project blurb shown under the description
        mockup      — path for a device mockup image/video shown up top
+       embed       — { url, aspectRatio?, poster?, label? } shown as a
+                     click-to-load playable iframe (nothing loads until
+                     clicked) plus a "play fullscreen" link — for code
+                     projects that are actually playable/usable rather
+                     than a static design. aspectRatio defaults to
+                     "3 / 4"; poster is an optional background image
+                     behind the play button
        overview    — array of { label, text?, items? } shown as a short
                      grid of blocks (e.g. what is it / how it works /
                      role / goal, or a bullet list of needs) — text is a
@@ -813,21 +820,92 @@ const DATA = {
       projects: [
         {
           id: 1,
-          name: "portfolio site",
-          short: "react / css",
+          name: "Space Invaders",
+          short: "browser game — javascript / canvas",
           description:
-            "Custom portfolio website built from scratch with React, featuring smooth page transitions, a dynamic project filter, and full CMS integration for easy content updates.",
-          image: "",
-          media: "",
+            "A browser-based Space Invaders remake — HTML5 canvas rendering, wave-based enemy progression, a boss fight, and full touch controls, built entirely in vanilla JavaScript with no game engine.",
+          image: "./assets/thumbnails/spaceinvaders-thumbnail.gif", // PLACEHOLDER — 1200x900, 4:3
+
+          context:
+            "Browser game, built to learn canvas rendering and game-loop fundamentals from scratch — no engine, no framework. It's fully playable below: wave-based enemy progression, a boss encounter, every sound effect synthesized live, and on-screen touch controls so it plays on both desktop and mobile.",
+
+          embed: {
+            url: "https://game-space-invader.netlify.app/",
+            aspectRatio: "3 / 4",
+            label: "play space invaders",
+          },
+
+          // Technical highlights, not design ones — media are placeholder
+          // gameplay-screenshot crops, drop in as-is.
+          highlights: [
+            {
+              title: "No engine, no framework",
+              text: "About 1,450 lines of vanilla JavaScript rendering to a single HTML5 canvas, with a requestAnimationFrame game loop and separate Particle, Bullet, Missile, PowerUp, and Boss classes driving the entity logic.",
+              media:
+                "./assets/projects/code/space-invaders/space-invaders-entities.jpg", // PLACEHOLDER
+              alt: "Space Invaders gameplay showing enemy waves, bullets, and particle effects",
+            },
+            {
+              title: "Every sound is synthesized, live",
+              text: "No audio files at all — every laser, explosion, and hit is a Web Audio API oscillator, generated in real time and shaped with a gain envelope for that classic arcade chirp.",
+              media:
+                "./assets/projects/code/space-invaders/space-invaders-boss.jpg", // PLACEHOLDER
+              alt: "Boss fight with health bar and neon visual effects",
+            },
+            {
+              title: "One codebase, two input systems",
+              text: "Keyboard controls and on-screen touch controls — a virtual joystick plus fire and missile buttons — run side by side from the same game state, so the same build plays on desktop and mobile. High score persists locally between sessions.",
+              media:
+                "./assets/projects/code/space-invaders/space-invaders-mobile.jpg", // PLACEHOLDER
+              alt: "Mobile view with on-screen joystick and fire button",
+            },
+          ],
+
+          links: { live: "https://game-space-invader.netlify.app/" },
         },
         {
           id: 2,
-          name: "component library",
-          short: "typescript / storybook",
+          name: "Frost Tower",
+          short: "browser game — javascript / canvas",
           description:
-            "An open-source UI component library built with TypeScript and Storybook. Covers form elements, navigation patterns, data display components, and layout primitives.",
-          image: "",
-          media: "",
+            "An Icy Tower–style climbing game — run to build speed, jump higher the faster you're going, and bounce off walls to keep climbing, rendered entirely on canvas with hand-drawn character art.",
+          image: "./assets/thumbnails/frosttower-thumbnail.gif", // PLACEHOLDER — 1200x900, 4:3
+
+          context:
+            "My take on Icy Tower, the classic speed-climbing platformer — built the same way as Space Invaders: no engine, just canvas and vanilla JavaScript. It's fully playable below: run to build speed, jump to fly higher the faster you're going, bounce off walls mid-air, and climb as many floors as you can before you fall.",
+
+          embed: {
+            url: "https://frost-tower.netlify.app/",
+            aspectRatio: "9 / 16",
+            label: "play frost tower",
+          },
+
+          // Technical highlights, not design ones — media are placeholder
+          // gameplay-screenshot crops, drop in as-is.
+          highlights: [
+            {
+              title: "Jump height is real physics, not a fixed animation",
+              text: "The core mechanic — run to build speed, then jump higher the faster you're going — comes from tuned physics constants: gravity, a base jump velocity, a speed bonus added per px/s of run speed, and a jump-cut multiplier for variable jump height when you release early.",
+              media: "./assets/projects/code/frost-tower/frost-tower-jump.jpg", // PLACEHOLDER
+              alt: "Player mid-jump between platforms, climbing the tower",
+            },
+            {
+              title: "The character started as hand-drawn SVG artwork",
+              text: "Original character illustration, converted into Path2D path data by hand and cached as bitmaps, then animated part-by-part directly on canvas — no sprite sheets, no image files.",
+              media:
+                "./assets/projects/code/frost-tower/frost-tower-character.jpg", // PLACEHOLDER
+              alt: "Close-up of the hand-drawn player character on canvas",
+            },
+            {
+              title: "A seeded random generator drives the tower",
+              text: "Platform placement comes from a mulberry32 seeded PRNG, so a tower layout is reproducible from its seed, and a dedicated particle pool reuses objects frame to frame instead of allocating new ones for every jump and landing.",
+              media:
+                "./assets/projects/code/frost-tower/frost-tower-particles.jpg", // PLACEHOLDER
+              alt: "Platform layout with particle effects from a landing",
+            },
+          ],
+
+          links: { live: "https://frost-tower.netlify.app/" },
         },
         {
           id: 3,
@@ -835,24 +913,6 @@ const DATA = {
           short: "next.js / supabase",
           description:
             "A collaborative task management web app built with Next.js and Supabase, featuring real-time updates, role-based access, and a fully responsive interface.",
-          image: "",
-          media: "",
-        },
-        {
-          id: 4,
-          name: "landing pages",
-          short: "html / css / gsap",
-          description:
-            "A series of high-converting landing pages for SaaS products, built with semantic HTML, custom CSS animations using GSAP, and optimised for Core Web Vitals.",
-          image: "",
-          media: "",
-        },
-        {
-          id: 5,
-          name: "browser extension",
-          short: "javascript",
-          description:
-            "A productivity browser extension that enhances reading focus by progressively revealing content, reducing visual noise, and saving highlights with one click.",
           image: "",
           media: "",
         },
