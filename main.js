@@ -24,6 +24,7 @@ const ICONS = {
   arrowLeft: `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,
   arrowRight: `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
   arrowUp: `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`,
+  play: `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="6 3 20 12 6 21"/></svg>`,
 };
 
 /* ─── STATE ─────────────────────────────────────── */
@@ -88,6 +89,30 @@ function buildDetailMockupHTML(mockup) {
   return mockup
     ? `<div class="proj-mockup">${mediaEl(mockup)}</div>`
     : "";
+}
+
+/* Optional playable embed — a poster button that swaps itself for a
+   live iframe on click (so nothing loads until someone actually wants
+   to play), plus a "play fullscreen" link as a backup for anyone on a
+   small screen. Click handler is wired up separately, after the HTML
+   is in the DOM — see renderCategoryPage(). */
+function buildDetailEmbedHTML(embed) {
+  if (!embed || !embed.url) return "";
+  const ratio = embed.aspectRatio || "3 / 4";
+  const posterStyle = embed.poster
+    ? ` style="aspect-ratio:${ratio};background-image:url('${embed.poster}')"`
+    : ` style="aspect-ratio:${ratio}"`;
+  const label = embed.label || "play";
+  return `
+    <div class="proj-embed">
+      <div class="embed-frame">
+        <button class="embed-poster" type="button"${posterStyle}>
+          <span class="embed-play-btn">${ICONS.play}<span>${label}</span></span>
+        </button>
+      </div>
+      <a class="embed-fullscreen-link" href="${embed.url}" target="_blank" rel="noopener noreferrer">play fullscreen ↗</a>
+    </div>
+  `;
 }
 
 /* Alternating text + detail-crop rows — each pairs one real decision
@@ -681,6 +706,7 @@ function renderCategoryPage(key) {
 
   const mockupHTML = buildDetailMockupHTML(sel.mockup);
   const contextHTML = buildDetailContextHTML(sel.context);
+  const embedHTML = buildDetailEmbedHTML(sel.embed);
   const highlightsHTML = buildDetailHighlightsHTML(sel.highlights);
   const galleryHTML = buildDetailGalleryHTML(sel.gallery);
   const overviewHTML = buildDetailOverviewHTML(sel.overview);
@@ -707,6 +733,7 @@ function renderCategoryPage(key) {
     ${mockupHTML}
     <p class="proj-detail-desc">${sel.description}</p>
     ${contextHTML}
+    ${embedHTML}
     ${overviewHTML}
     ${processHTML}
     ${researchHTML}
@@ -727,6 +754,20 @@ function renderCategoryPage(key) {
         ${selIdx === cat.projects.length - 1 ? "disabled" : ""}>${ICONS.arrowRight}</button>
     </div>
   `;
+
+  // Swap the embed poster for a live iframe on click — nothing loads
+  // until the visitor actually asks to play.
+  detail.querySelector(".embed-poster")?.addEventListener("click", (e) => {
+    const frame = e.currentTarget.closest(".embed-frame");
+    const iframe = document.createElement("iframe");
+    iframe.src = sel.embed.url;
+    iframe.loading = "lazy";
+    iframe.title = sel.name;
+    iframe.allow = "autoplay; fullscreen";
+    iframe.allowFullscreen = true;
+    iframe.style.aspectRatio = sel.embed.aspectRatio || "3 / 4";
+    frame.replaceChildren(iframe);
+  });
 
   // Attach nav button listeners
   detail.querySelector(`#prev-${key}`)?.addEventListener("click", () => {
