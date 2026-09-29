@@ -886,7 +886,7 @@ const DATA = {
             {
               title: "Jump height is real physics, not a fixed animation",
               text: "The core mechanic — run to build speed, then jump higher the faster you're going — comes from tuned physics constants: gravity, a base jump velocity, a speed bonus added per px/s of run speed, and a jump-cut multiplier for variable jump height when you release early.",
-              media: "./assets/projects/code/frost-tower/frost-tower-jump.jpg", // PLACEHOLDER
+              media: "./assets/projects/code/frost-tower/frost-tower-jump.gif", // PLACEHOLDER
               alt: "Player mid-jump between platforms, climbing the tower",
             },
             {
