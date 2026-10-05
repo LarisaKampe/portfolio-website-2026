@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# If the domain changes, update it here, in sitemap.xml and in index.html
+Sitemap: https://larisakampe.netlify.app/sitemap.xml

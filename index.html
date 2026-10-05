@@ -3,37 +3,148 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Larisa Kampe — Portfolio</title>
-    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <title>Larisa Kampe — Web Developer &amp; UI/UX Designer</title>
     <meta
       name="description"
-      content="Creative Web Developer and Designer dedicated to bridging the gap between aesthetics and functionality."
+      content="Portfolio of Larisa Kampe, a creative web developer and UI/UX designer — case studies in UI/UX, frontend code, and graphic design for brands like Visa, Nestlé, and Air Serbia."
     />
+    <meta name="author" content="Larisa Kampe" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+
+    <!-- ═══ SITE ADDRESS ═══════════════════════════════════════════
+         Site address: "https://larisakampe.netlify.app". To change it, replace
+         it everywhere here, in robots.txt and in sitemap.xml.   -->
+    <link rel="canonical" href="https://larisakampe.netlify.app/" />
+
+    <!-- Social share previews (LinkedIn, Facebook, Slack, WhatsApp…)
+         Title/description are kept in sync per page by main.js. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Larisa Kampe" />
+    <meta property="og:url" content="https://larisakampe.netlify.app/" />
+    <meta property="og:title" content="Larisa Kampe — Web Developer &amp; UI/UX Designer" />
+    <meta
+      property="og:description"
+      content="Portfolio of Larisa Kampe, a creative web developer and UI/UX designer — case studies in UI/UX, frontend code, and graphic design."
+    />
+    <meta property="og:image" content="https://larisakampe.netlify.app/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Larisa Kampe — web developer and UI/UX designer, with project thumbnails" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Larisa Kampe — Web Developer &amp; UI/UX Designer" />
+    <meta
+      name="twitter:description"
+      content="Portfolio of Larisa Kampe, a creative web developer and UI/UX designer — case studies in UI/UX, frontend code, and graphic design."
+    />
+    <meta name="twitter:image" content="https://larisakampe.netlify.app/assets/og-image.jpg" />
+
+    <!-- Structured data (schema.org) — who Larisa is and what this site is.
+         Each project is added as a CreativeWork by main.js. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://larisakampe.netlify.app/#person",
+            "name": "Larisa Kampe",
+            "url": "https://larisakampe.netlify.app/",
+            "image": "https://larisakampe.netlify.app/assets/og-image.jpg",
+            "jobTitle": "Web Developer & UI/UX Designer",
+            "description": "Creative web developer and designer bridging aesthetics and functionality — frontend development, UI/UX, and graphic design.",
+            "email": "mailto:larisa.kampe@gmail.com",
+            "sameAs": ["https://www.linkedin.com/in/larisa-kampe"],
+            "knowsAbout": [
+              "Web development",
+              "Frontend development",
+              "UI/UX design",
+              "User research",
+              "Graphic design",
+              "Brand identity",
+              "HTML",
+              "CSS",
+              "JavaScript",
+              "React"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://larisakampe.netlify.app/#website",
+            "url": "https://larisakampe.netlify.app/",
+            "name": "Larisa Kampe — Portfolio",
+            "inLanguage": "en",
+            "author": { "@id": "https://larisakampe.netlify.app/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://larisakampe.netlify.app/#profile",
+            "url": "https://larisakampe.netlify.app/",
+            "name": "Larisa Kampe — Web Developer & UI/UX Designer",
+            "isPartOf": { "@id": "https://larisakampe.netlify.app/#website" },
+            "mainEntity": { "@id": "https://larisakampe.netlify.app/#person" }
+          }
+        ]
+      }
+    </script>
 
     <!-- Fonts -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&family=DM+Sans:wght@400;500&family=Cormorant+Garamond:wght@400;500&family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@400&family=IBM+Plex+Mono:wght@500&family=Nunito+Sans:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <!-- Case-study type-specimen fonts (Space Grotesk, IBM Plex Sans/Mono,
-         DM Sans, Cormorant Garamond, Nunito Sans) are loaded above so the
-         "Ab" samples in each project's font-system section render in the
-         real typeface, not a fallback. -->
+         DM Sans, Cormorant Garamond, Nunito Sans) are loaded by main.js
+         only when a project's font-system section is shown. -->
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Lets keyboard users jump past the menu straight to the content -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- ═══════════ SIDEBAR ═══════════════════════ -->
     <!--  Built dynamically by main.js              -->
-    <aside class="sidebar" id="sidebar"></aside>
+    <nav class="sidebar" id="sidebar" aria-label="Main"></nav>
 
     <!-- ═══════════ MAIN CONTENT ════════════════ -->
     <!--  Pages built dynamically by main.js       -->
-    <main class="main" id="main"></main>
+    <main class="main" id="main" tabindex="-1"></main>
+
+    <!-- Screen-reader announcements (e.g. which project is now showing) -->
+    <div id="a11y-status" class="visually-hidden" role="status" aria-live="polite"></div>
+
+    <!-- Readable summary for visitors and crawlers without JavaScript -->
+    <noscript>
+      <div class="main">
+        <h1>Larisa Kampe — Web Developer &amp; UI/UX Designer</h1>
+        <p>
+          Creative Web Developer and Designer dedicated to bridging the gap
+          between aesthetics and functionality. By blending technical frontend
+          expertise with a foundation in UI/UX, I build seamless,
+          detail-oriented digital products that look as good as they perform.
+        </p>
+        <h2>Work</h2>
+        <ul>
+          <li>UI/UX — BizUp, Pulse, Furniture website, WTE, Pawzy</li>
+          <li>Code — Space Invaders, Frost Tower</li>
+          <li>Graphic design — Knjaz Miloš, Doncafé Prolećni Moment, Aleksandar Sofronijević logo design, AquaViva Junior, Crox</li>
+        </ul>
+        <h2>Contact</h2>
+        <p>
+          <a href="mailto:larisa.kampe@gmail.com">larisa.kampe@gmail.com</a> ·
+          <a href="https://www.linkedin.com/in/larisa-kampe">LinkedIn</a> ·
+          <a href="./assets/Larisa_Kampe_CV.pdf">CV</a>
+        </p>
+        <p>This site needs JavaScript enabled to show the full portfolio.</p>
+      </div>
+    </noscript>
 
     <!-- ═══════════ SCROLL TO TOP ════════════════ -->
     <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
@@ -57,6 +168,5 @@
     <!-- ═══════════ MAIN SCRIPT ══════════════════ -->
     <script src="main.js"></script>
 
-    <script src="https://unpkg.com/@rive-app/webgl2@latest"></script>
   </body>
 </html>

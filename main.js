@@ -18,7 +18,6 @@ const ICONS = {
   illustrations: `<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
   "about-me": `<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 10h.01M8 14h.01M12 10h4M12 14h4"/><circle cx="8" cy="10" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="14" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="2"/></svg>`,
   linkedin: `<svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
-  github: `<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>`,
   email: `<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
   cv: `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
   arrowLeft: `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,
@@ -42,38 +41,66 @@ function getClientsVisible() {
 
 /* ─── HELPERS ───────────────────────────────────── */
 function icon(key) {
-  return `<span class="s-icon">${ICONS[key] ?? ""}</span>`;
+  return `<span class="s-icon" aria-hidden="true">${ICONS[key] ?? ""}</span>`;
 }
 
-function thumb(src) {
+// Safe for use inside a double-quoted HTML attribute
+function attr(text) {
+  return String(text ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
+// Make a non-button element (card) behave like a button for keyboard
+// and screen-reader users: focusable, announced, Enter/Space activate it
+function makeActivatable(el, label, onActivate) {
+  el.tabIndex = 0;
+  el.setAttribute("role", "button");
+  if (label) el.setAttribute("aria-label", label);
+  el.addEventListener("click", onActivate);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onActivate();
+    }
+  });
+}
+
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function thumb(src, alt = "") {
   if (!src) return "";
-  return `<img src="${src}" alt="" loading="lazy">`;
+  return `<img src="${src}" alt="${attr(alt)}" loading="lazy">`;
 }
 
-function mediaEl(src) {
+function mediaEl(src, alt = "") {
   if (!src) return "";
   const isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
   if (isVideo) {
-    return `<video src="${src}" autoplay muted loop playsinline></video>`;
+    // Respect "reduce motion": no autoplay, and give the visitor controls instead
+    const playback = prefersReducedMotion() ? "controls" : "autoplay";
+    return `<video src="${src}" ${playback} muted loop playsinline aria-label="${attr(alt)}"></video>`;
   }
-  return `<img src="${src}" alt="" loading="lazy">`;
+  return `<img src="${src}" alt="${attr(alt)}" loading="lazy">`;
 }
 
 /* Detail panel media — used only as a fallback for projects that still
    use the older single `media` field (no hero/highlights defined). */
 function buildDetailMediaHTML(sel) {
   return sel.media
-    ? `<div class="proj-detail-media">${mediaEl(sel.media)}</div>`
+    ? `<div class="proj-detail-media">${mediaEl(sel.media, sel.name)}</div>`
     : `<div class="proj-detail-media"></div>`;
 }
 
 /* Stacked gallery — an ordered list of image/video paths (e.g. a
    video followed by a still) rendered one after another. Takes
    precedence over the single `media` field when present. */
-function buildDetailGalleryHTML(gallery) {
+function buildDetailGalleryHTML(gallery, name) {
   if (!gallery || !gallery.length) return "";
   const items = gallery
-    .map((src) => `<div class="proj-gallery-item">${mediaEl(src)}</div>`)
+    .map(
+      (src, i) =>
+        `<div class="proj-gallery-item">${mediaEl(src, `${name} — ${/\.(mp4|webm|ogg)/i.test(src) ? "video" : "image"} ${i + 1}`)}</div>`,
+    )
     .join("");
   return `<div class="proj-gallery">${items}</div>`;
 }
@@ -85,9 +112,9 @@ function buildDetailContextHTML(context) {
 
 /* Universal device mockup shown at the very top of every UI/UX
    case study, before the description. */
-function buildDetailMockupHTML(mockup) {
+function buildDetailMockupHTML(mockup, name) {
   return mockup
-    ? `<div class="proj-mockup">${mediaEl(mockup)}</div>`
+    ? `<div class="proj-mockup">${mediaEl(mockup, `${name} — device mockup`)}</div>`
     : "";
 }
 
@@ -182,8 +209,31 @@ function buildDetailPaletteHTML(palette) {
    Kept general — a handful of type roles, not a full scale. Each
    entry can optionally specify `family` (CSS font-family) so the
    "Ab" sample renders in the project's real typeface. */
+const SPECIMEN_FONTS = {
+  "DM Sans": "DM+Sans:wght@400;500",
+  "Cormorant Garamond": "Cormorant+Garamond:wght@400;500",
+  "Space Grotesk": "Space+Grotesk:wght@700",
+  "IBM Plex Sans": "IBM+Plex+Sans:wght@400",
+  "IBM Plex Mono": "IBM+Plex+Mono:wght@500",
+  "Nunito Sans": "Nunito+Sans:wght@400;700",
+};
+const loadedSpecimenFonts = new Set();
+
+// Pull in a Google font the first time a specimen card needs it
+function loadSpecimenFont(family) {
+  const name = family.split(",")[0].replace(/['"]/g, "").trim();
+  const spec = SPECIMEN_FONTS[name];
+  if (!spec || loadedSpecimenFonts.has(name)) return;
+  loadedSpecimenFonts.add(name);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${spec}&display=swap`;
+  document.head.appendChild(link);
+}
+
 function buildDetailTypographyHTML(typography) {
   if (!typography || !typography.length) return "";
+  typography.forEach((t) => t.family && loadSpecimenFont(t.family));
   const cards = typography
     .map((t) => {
       const styleAttr = t.family
@@ -299,7 +349,7 @@ function buildDetailPersonasHTML(personas) {
               : "";
             return `<span class="dot"${style}></span>`;
           }).join("");
-          return `<div class="device-row"><span>${d.label}</span><span class="device-dots">${dots}</span></div>`;
+          return `<div class="device-row"><span>${d.label}</span><span class="device-dots" role="img" aria-label="${d.level} out of 5">${dots}</span></div>`;
         })
         .join("");
 
@@ -320,10 +370,10 @@ function buildDetailPersonasHTML(personas) {
 
       return `
         <div class="persona-card">
-          <div class="persona-photo">${mediaEl(p.photo)}</div>
+          <div class="persona-photo">${mediaEl(p.photo, `User persona: ${p.name}`)}</div>
           <div class="persona-body">
             <blockquote class="persona-quote">&ldquo;${p.quote}&rdquo;</blockquote>
-            <h3 class="persona-name" style="color:${p.color}">${p.name}</h3>
+            <h3 class="persona-name" style="text-decoration-color:${p.color}">${p.name}</h3>
             <div class="persona-meta">${metaHTML}</div>
             <div class="persona-cols">
               <div>
@@ -356,7 +406,7 @@ function buildDetailArtifactsHTML(artifacts) {
       <div class="proj-artifact">
         <h3 class="proj-subheading">${a.label}</h3>
         ${a.caption ? `<p class="proj-artifact-caption">${a.caption}</p>` : ""}
-        <div class="proj-artifact-media">${mediaEl(a.image)}</div>
+        <div class="proj-artifact-media">${mediaEl(a.image, a.label)}</div>
       </div>`,
     )
     .join("");
@@ -435,15 +485,59 @@ function buildSidebar() {
   // Logo
   const logoEl = document.createElement("div");
   logoEl.className = "s-logo";
-  logoEl.innerHTML = `<img src="./assets/logo.svg" alt="logo">`;
+  logoEl.innerHTML = `<img src="./assets/logo.svg" alt="Larisa Kampe"><button type="button" class="s-burger" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar"><span></span><span></span><span></span></button>`;
+  const burger = logoEl.querySelector(".s-burger");
+
+  // Mobile menu open/close — keeps the burger's ARIA state in sync
+  let scrollAtOpen = 0;
+  const setNavOpen = (open) => {
+    if (open) scrollAtOpen = window.scrollY;
+    sidebar.classList.toggle("nav-open", open);
+    burger.setAttribute("aria-expanded", String(open));
+    burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    syncMenuInert();
+  };
+  const isMobile = () => window.innerWidth <= 768;
+
+  // On mobile the collapsed menu is only clipped, not removed — make its
+  // links unreachable for keyboard and screen readers until it's opened
+  const syncMenuInert = () => {
+    const hidden = isMobile() && !sidebar.classList.contains("nav-open");
+    [navEl, socialEl].forEach((el) => (el.inert = hidden));
+  };
+  window.addEventListener("resize", syncMenuInert);
+
   logoEl.addEventListener("click", () => {
-    if (window.innerWidth <= 768) {
-      sidebar.classList.toggle("nav-open");
+    if (isMobile()) {
+      setNavOpen(!sidebar.classList.contains("nav-open"));
     } else {
       navigate("home");
     }
   });
   sidebar.appendChild(logoEl);
+
+  // Close the open menu on a tap outside it, on Escape, or once the page scrolls
+  document.addEventListener("click", (e) => {
+    if (sidebar.classList.contains("nav-open") && !sidebar.contains(e.target))
+      setNavOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sidebar.classList.contains("nav-open")) {
+      setNavOpen(false);
+      burger.focus();
+    }
+  });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (
+        sidebar.classList.contains("nav-open") &&
+        Math.abs(window.scrollY - scrollAtOpen) > 40
+      )
+        setNavOpen(false);
+    },
+    { passive: true },
+  );
 
   // Nav list
   const navEl = document.createElement("ul");
@@ -455,15 +549,21 @@ function buildSidebar() {
     { key: "about-me", label: "about me" },
   ];
 
+  // Real links, so they're keyboard-focusable and open in a new tab on
+  // middle-click; a plain click is handled here without a page reload
   navItems.forEach((item) => {
     const li = document.createElement("li");
-    li.className = "s-item";
-    li.dataset.page = item.key;
-    li.innerHTML = `${icon(item.key)}<span class="s-label">${item.label}</span>`;
-    li.addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.className = "s-item";
+    a.href = "#" + item.key;
+    a.dataset.page = item.key;
+    a.innerHTML = `${icon(item.key)}<span class="s-label">${item.label}</span>`;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
       navigate(item.key);
-      if (window.innerWidth <= 768) sidebar.classList.remove("nav-open");
+      if (isMobile()) setNavOpen(false);
     });
+    li.appendChild(a);
     navEl.appendChild(li);
   });
 
@@ -480,7 +580,6 @@ function buildSidebar() {
 
   const socials = [
     { key: "linkedin", label: "linkedin", href: owner.social.linkedin },
-    { key: "github", label: "github", href: owner.social.github },
     { key: "email", label: "email", href: owner.social.email },
     { key: "cv", label: "cv", href: owner.social.cv },
   ];
@@ -489,17 +588,19 @@ function buildSidebar() {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.href = s.href;
-    if (!s.href.startsWith("mailto")) a.target = "_blank";
     a.rel = "noopener noreferrer";
-    a.innerHTML = `${icon(s.key)}<span class="s-label">${s.label}</span>`;
+    const newTab = !s.href.startsWith("mailto");
+    if (newTab) a.target = "_blank";
+    a.innerHTML = `${icon(s.key)}<span class="s-label">${s.label}${newTab ? '<span class="visually-hidden"> (opens in a new tab)</span>' : ""}</span>`;
     a.addEventListener("click", () => {
-      if (window.innerWidth <= 768) sidebar.classList.remove("nav-open");
+      if (isMobile()) setNavOpen(false);
     });
     li.appendChild(a);
     socialEl.appendChild(li);
   });
 
   sidebar.appendChild(socialEl);
+  syncMenuInert();
 }
 
 /* ─── BUILD PAGES ───────────────────────────────── */
@@ -531,7 +632,7 @@ function buildHomePage() {
 
   // Title + desc
   page.innerHTML = `
-    <h1 class="page-title">${owner.name}</h1>
+    <h1 class="page-title" tabindex="-1">${owner.name}</h1>
     <p class="page-desc">${owner.tagline}</p>
   `;
 
@@ -542,7 +643,7 @@ function buildHomePage() {
     const card = document.createElement("div");
     card.className = "skill-card";
     card.innerHTML = cat.title.replace(" ", "<br>");
-    card.addEventListener("click", () => navigate(cat.key));
+    makeActivatable(card, `${cat.title} projects`, () => navigate(cat.key));
     skillsGrid.appendChild(card);
   });
   page.appendChild(skillsGrid);
@@ -557,13 +658,15 @@ function buildHomePage() {
     const card = document.createElement("div");
     card.className = "proj-card";
     card.innerHTML = `
-      <div class="proj-thumb">${thumb(proj.image)}</div>
+      <div class="proj-thumb">${thumb(proj.image, `${proj.name} — ${proj.short}`)}</div>
       <div class="proj-meta">
         <div class="proj-name">${proj.name}</div>
         <div class="proj-short">${proj.short}</div>
       </div>
     `;
-    card.addEventListener("click", () => navigate(f.category));
+    makeActivatable(card, `${proj.name} — ${proj.short}`, () =>
+      navigate(f.category),
+    );
     featGrid.appendChild(card);
   });
   page.appendChild(featGrid);
@@ -669,7 +772,7 @@ function renderCategoryPage(key, scrollToProject = false) {
   const intro = document.createElement("div");
   intro.className = "page-intro";
   intro.innerHTML = `
-    <h1 class="page-title">${cat.title}</h1>
+    <h1 class="page-title" tabindex="-1">${cat.title}</h1>
     <p class="page-desc">${cat.description}</p>
   `;
 
@@ -681,15 +784,17 @@ function renderCategoryPage(key, scrollToProject = false) {
     const card = document.createElement("div");
     card.className = "proj-card" + (proj.id === selId ? " selected" : "");
     card.innerHTML = `
-      <div class="proj-thumb">${thumb(proj.image)}</div>
+      <div class="proj-thumb">${thumb(proj.image, `${proj.name} — ${proj.short}`)}</div>
       <div class="proj-meta">
         <div class="proj-name">${proj.name}</div>
         <div class="proj-short">${proj.short}</div>
       </div>
     `;
-    card.addEventListener("click", () => {
+    if (proj.id === selId) card.setAttribute("aria-current", "true");
+    makeActivatable(card, `${proj.name} — ${proj.short}`, () => {
       state.selectedProject[key] = proj.id;
       renderCategoryPage(key, true);
+      focusProject(key);
     });
     grid.appendChild(card);
   });
@@ -704,11 +809,11 @@ function renderCategoryPage(key, scrollToProject = false) {
   const detail = document.createElement("div");
   detail.className = "proj-detail";
 
-  const mockupHTML = buildDetailMockupHTML(sel.mockup);
+  const mockupHTML = buildDetailMockupHTML(sel.mockup, sel.name);
   const contextHTML = buildDetailContextHTML(sel.context);
   const embedHTML = buildDetailEmbedHTML(sel.embed);
   const highlightsHTML = buildDetailHighlightsHTML(sel.highlights);
-  const galleryHTML = buildDetailGalleryHTML(sel.gallery);
+  const galleryHTML = buildDetailGalleryHTML(sel.gallery, sel.name);
   const overviewHTML = buildDetailOverviewHTML(sel.overview);
   const processHTML = buildDetailProcessHTML(sel.process);
   const researchHTML = buildDetailResearchHTML(sel.research);
@@ -729,7 +834,7 @@ function renderCategoryPage(key, scrollToProject = false) {
       : buildDetailMediaHTML(sel);
 
   detail.innerHTML = `
-    <h2 class="proj-detail-title">${sel.name}</h2>
+    <h2 class="proj-detail-title" tabindex="-1">${sel.name}</h2>
     ${mockupHTML}
     <p class="proj-detail-desc">${sel.description}</p>
     ${contextHTML}
@@ -750,6 +855,7 @@ function renderCategoryPage(key, scrollToProject = false) {
     <div class="proj-nav">
       <button class="nav-btn" id="prev-${key}" aria-label="Previous project"
         ${selIdx === 0 ? "disabled" : ""}>${ICONS.arrowLeft}</button>
+      <span class="proj-count" aria-hidden="true">${selIdx + 1} / ${cat.projects.length}</span>
       <button class="nav-btn" id="next-${key}" aria-label="Next project"
         ${selIdx === cat.projects.length - 1 ? "disabled" : ""}>${ICONS.arrowRight}</button>
     </div>
@@ -776,7 +882,8 @@ function renderCategoryPage(key, scrollToProject = false) {
     );
     if (idx > 0) {
       state.selectedProject[key] = cat.projects[idx - 1].id;
-      renderCategoryPage(key);
+      renderCategoryPage(key, "instant");
+      focusProject(key, `prev-${key}`);
     }
   });
 
@@ -786,21 +893,82 @@ function renderCategoryPage(key, scrollToProject = false) {
     );
     if (idx < cat.projects.length - 1) {
       state.selectedProject[key] = cat.projects[idx + 1].id;
-      renderCategoryPage(key);
+      renderCategoryPage(key, "instant");
+      focusProject(key, `next-${key}`);
     }
   });
+
+  // Swipe left/right on mobile to move between projects — reuses the
+  // nav buttons so the disabled state at either end is respected.
+  let touchStart = null;
+  detail.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStart = null;
+      if (window.innerWidth > 768 || e.touches.length !== 1) return;
+      // Leave swipes inside horizontally scrollable content (galleries etc.) alone
+      for (let el = e.target; el && el !== detail; el = el.parentElement) {
+        const ox = getComputedStyle(el).overflowX;
+        if (
+          (ox === "auto" || ox === "scroll") &&
+          el.scrollWidth > el.clientWidth
+        )
+          return;
+      }
+      touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    },
+    { passive: true },
+  );
+  detail.addEventListener(
+    "touchend",
+    (e) => {
+      if (!touchStart) return;
+      const dx = e.changedTouches[0].clientX - touchStart.x;
+      const dy = e.changedTouches[0].clientY - touchStart.y;
+      touchStart = null;
+      // Mostly-horizontal, deliberate swipes only
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      const btn = detail.querySelector(
+        dx < 0 ? `#next-${key}` : `#prev-${key}`,
+      );
+      if (btn && !btn.disabled) btn.click();
+    },
+    { passive: true },
+  );
 
   projectSection.appendChild(detail);
   page.appendChild(projectSection);
 
   // Picking a card from the grid jumps straight to its detail panel —
   // otherwise it's easy to not notice the page scrolled past the top.
+  // Prev/next (buttons or swipe) pass "instant" so the new project starts
+  // at its title rather than wherever the previous one was scrolled to.
   if (scrollToProject) {
-    projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    projectSection.scrollIntoView({
+      behavior:
+        scrollToProject === "instant" || prefersReducedMotion() ? "instant" : "smooth",
+      block: "start",
+    });
   }
 
   // Animate highlight rows in as they scroll into view
   initHighlightAnimations();
+
+  if (state.currentPage === key) updatePageMeta();
+}
+
+// After the project panel is re-rendered, put focus somewhere sensible
+// (the pressed nav button, or else the project title) and announce it
+function focusProject(key, buttonId) {
+  const cat = DATA.categories.find((c) => c.key === key);
+  const idx = cat.projects.findIndex((p) => p.id === state.selectedProject[key]);
+  const btn = buttonId && document.getElementById(buttonId);
+  const target =
+    btn && !btn.disabled
+      ? btn
+      : document.querySelector(`#page-${key} .proj-detail-title`);
+  target?.focus({ preventScroll: true });
+  announce(`${cat.projects[idx].name}, project ${idx + 1} of ${cat.projects.length}`);
 }
 
 /* ─── ABOUT ME PAGE ─────────────────────────────── */
@@ -811,7 +979,7 @@ function buildAboutPage() {
   page.id = "page-about-me";
 
   page.innerHTML = `
-    <h1 class="page-title">about me</h1>
+    <h1 class="page-title" tabindex="-1">about me</h1>
     <p class="page-desc">${owner.tagline}</p>
     <h2 class="about-subheading">background</h2>
     ${owner.about.map((p) => `<p class="about-body">${p}</p>`).join("")}
@@ -834,7 +1002,10 @@ function navigate(pageKey, pushHistory = true) {
 
   // Sidebar active state
   document.querySelectorAll(".s-item").forEach((item) => {
-    item.classList.toggle("active", item.dataset.page === pageKey);
+    const current = item.dataset.page === pageKey;
+    item.classList.toggle("active", current);
+    if (current) item.setAttribute("aria-current", "page");
+    else item.removeAttribute("aria-current");
   });
 
   state.currentPage = pageKey;
@@ -844,6 +1015,19 @@ function navigate(pageKey, pushHistory = true) {
   }
 
   window.scrollTo({ top: 0, behavior: "instant" });
+  updatePageMeta();
+
+  // After a user-initiated page change, move focus to the new page's
+  // heading so screen-reader and keyboard users start at the top of it
+  if (pushHistory) target?.querySelector(".page-title")?.focus({ preventScroll: true });
+}
+
+// Polite screen-reader announcement (e.g. "Pawzy, project 5 of 5")
+function announce(message) {
+  const el = document.getElementById("a11y-status");
+  if (!el) return;
+  el.textContent = "";
+  requestAnimationFrame(() => (el.textContent = message));
 }
 
 /* ─── CLIENTS CAROUSEL ──────────────────────────── */
@@ -884,6 +1068,79 @@ function clientsScroll(dir) {
   updateClientsCarousel();
 }
 
+/* ─── SEO: PAGE TITLE, DESCRIPTION, STRUCTURED DATA ── */
+const SITE_NAME = "Larisa Kampe";
+
+// Plain text, trimmed to a search-snippet-friendly length
+function snippet(text, max = 155) {
+  const plain = String(text ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  return plain.length > max ? plain.slice(0, max - 1).replace(/\s+\S*$/, "") + "…" : plain;
+}
+
+function setMeta(selector, value) {
+  document.querySelector(selector)?.setAttribute("content", value);
+}
+
+// Keep the tab title / description / share tags in step with what's on screen
+function updatePageMeta() {
+  const { owner, categories } = DATA;
+  const key = state.currentPage;
+  const cat = categories.find((c) => c.key === key);
+  let title = `${SITE_NAME} — Web Developer & UI/UX Designer`;
+  let desc = owner.tagline;
+
+  if (cat) {
+    const proj = cat.projects.find((p) => p.id === state.selectedProject[key]);
+    title = proj
+      ? `${proj.name} — ${cat.title} project | ${SITE_NAME}`
+      : `${cat.title} projects | ${SITE_NAME}`;
+    desc = proj ? proj.description : cat.description;
+  } else if (key === "about-me") {
+    title = `About me | ${SITE_NAME}`;
+    desc = owner.about[0];
+  }
+
+  desc = snippet(desc);
+  document.title = title;
+  setMeta('meta[name="description"]', desc);
+  setMeta('meta[property="og:title"]', title);
+  setMeta('meta[property="og:description"]', desc);
+  setMeta('meta[name="twitter:title"]', title);
+  setMeta('meta[name="twitter:description"]', desc);
+}
+
+// Every project as a CreativeWork, linked to the Person declared in index.html
+function injectProjectStructuredData() {
+  const abs = (path) => new URL(path, location.href).href;
+  const items = DATA.categories.flatMap((cat) =>
+    cat.projects.map((p) => {
+      const work = {
+        "@type": "CreativeWork",
+        name: p.name,
+        description: snippet(p.description, 300),
+        genre: cat.title,
+        creator: { "@id": `${location.origin}/#person` },
+      };
+      if (p.image) work.image = abs(p.image);
+      if (p.links?.live) work.url = p.links.live;
+      return work;
+    }),
+  );
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${SITE_NAME} — portfolio projects`,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item,
+    })),
+  });
+  document.head.appendChild(script);
+}
+
 /* ─── SCROLL TO TOP ─────────────────────────────── */
 function initScrollTop() {
   const btn = document.getElementById("scroll-top");
@@ -894,7 +1151,21 @@ function initScrollTop() {
   });
 
   btn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "instant" : "smooth" });
+    // Bring keyboard focus back to the top too, not just the view
+    document
+      .querySelector(".page.active .page-title")
+      ?.focus({ preventScroll: true });
+  });
+}
+
+// The skip link targets #main, which the hash router would otherwise treat
+// as a page name — handle it here and just move focus to the content
+function initSkipLink() {
+  document.querySelector(".skip-link")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const heading = document.querySelector(".page.active .page-title");
+    (heading || document.getElementById("main")).focus();
   });
 }
 
@@ -903,6 +1174,8 @@ function init() {
   buildSidebar();
   buildPages();
   initScrollTop();
+  initSkipLink();
+  injectProjectStructuredData();
 
   // Carousel sizing needs the DOM to be ready
   requestAnimationFrame(() => {

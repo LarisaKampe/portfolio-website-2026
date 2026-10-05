@@ -16,7 +16,6 @@ const DATA = {
     },
     social: {
       linkedin: "https://www.linkedin.com/in/larisa-kampe",
-      github: "https://github.com",
       email: "mailto:larisa.kampe@gmail.com",
       cv: "./assets/Larisa_Kampe_CV.pdf",
     },
@@ -122,7 +121,7 @@ const DATA = {
           short: "business finance — web design",
           description:
             "A ground-up design system and landing-page build for a business-finance brand — color system, typography, component library, and five key pages: home, offer finance, resources, careers, and partner. Designed in Figma and built as a React 18 + Tailwind CSS v3 SPA with Vite and React Router v6, deployed on Netlify.",
-          image: "./assets/thumbnails/bizup-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/bizup-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
 
           context:
             "BizUp is a self-directed transformation project — I took a business-finance brand concept and rebuilt its landing experience from the ground up, from a full design system in Figma to a working, deployed React build. The goal was to practice owning a product experience end to end, not just a single page.",
@@ -131,7 +130,7 @@ const DATA = {
           // device mockup of the finished design, shown before the
           // description. Recommended export: ~2160x1080 (2:1 ratio) —
           // this file already matches, just drop it in as-is.
-          mockup: "./assets/projects/ui-ux/bizup/bizup-mockup.png",
+          mockup: "./assets/projects/ui-ux/bizup/bizup-mockup.webp",
 
           // Each highlight pairs one real decision with a small detail crop
           // that proves it — not a full page screenshot.
@@ -139,7 +138,7 @@ const DATA = {
             {
               text: "Dark navy carries the weight — stability, trust, the seriousness a finance product needs. Cyan is reserved entirely for anything clickable, so no matter how dense a section gets, your eye always knows where to act.",
               media:
-                "./assets/projects/ui-ux/bizup/bizup-detail-cta-buttons.png", // PLACEHOLDER — crop of hero CTA buttons
+                "./assets/projects/ui-ux/bizup/bizup-detail-cta-buttons.webp", // PLACEHOLDER — crop of hero CTA buttons
               alt: "Primary and secondary CTA buttons in cyan against the dark navy hero",
             },
             {
@@ -155,7 +154,7 @@ const DATA = {
             },
             {
               text: "Most small-business owners would realistically discover and apply for funding from their phone, not a laptop \u2014 so the mobile layout came first, and desktop is the expanded version, not the default one.",
-              media: "./assets/projects/ui-ux/bizup/bizup-homepage mobile.png", // PLACEHOLDER — crop of mobile hero
+              media: "./assets/projects/ui-ux/bizup/bizup-homepage mobile.webp", // PLACEHOLDER — crop of mobile hero
               alt: "Mobile hero and application flow",
             },
           ],
@@ -187,17 +186,17 @@ const DATA = {
           short: "landing page — web design",
           description:
             "A conversion-focused landing page for an AI front-desk tool built for physical therapy and wellness clinics — lead capture, automated follow-up, and scheduling, positioned to replace hiring another front-desk hire.",
-          image: "./assets/thumbnails/pulse-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/pulse-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
           context:
             "Pulse is a self-directed practice project \u2014 I designed and built a landing page from scratch for a fictional AI front-desk product aimed at physical therapy and wellness clinics, treating it as a full landing-page campaign: positioning, copy, IA, and pricing structure, not just visual design. The core challenge was selling a fairly technical idea \u2014 AI answering calls and texts on a clinic's behalf \u2014 to a buyer who's probably never bought SaaS before, which meant building trust fast without leaning on jargon or a wall of screenshots.",
           // Universal for every UI/UX case study — see BizUp entry for
           // sizing guidance (~2160x1080, 2:1 ratio).
-          mockup: "./assets/projects/ui-ux/pulse/pulse-mockup.png", // PLACEHOLDER
+          mockup: "./assets/projects/ui-ux/pulse/pulse-mockup.webp", // PLACEHOLDER
 
           highlights: [
             {
               text: "The page opens by naming the problem, not the product \u2014 cold leads, dropped follow-ups, revenue that swings with who remembered to call back. Four specific pains, stated before a single feature is shown, so the reader recognizes their own week before being sold anything.",
-              media: "./assets/projects/ui-ux/pulse/four-cards.png", // PLACEHOLDER — crop of the 4 "behind the scenes" pain-point cards
+              media: "./assets/projects/ui-ux/pulse/four-cards.webp", // PLACEHOLDER — crop of the 4 "behind the scenes" pain-point cards
               alt: "The four pain-point cards under 'Meanwhile, behind the scenes'",
             },
             {
@@ -207,12 +206,12 @@ const DATA = {
             },
             {
               text: "Every feature name is a verb \u2014 Capture, Answer, Schedule, Track, Convert \u2014 and maps directly back to one of the four stated pains. That symmetry keeps a five-part feature section feeling tight instead of like a checklist.",
-              media: "./assets/projects/ui-ux/pulse/numbered-features.png", // PLACEHOLDER — crop showing the numbered CAPTURE/ANSWER/SCHEDULE feature labels
+              media: "./assets/projects/ui-ux/pulse/numbered-features.webp", // PLACEHOLDER — crop showing the numbered CAPTURE/ANSWER/SCHEDULE feature labels
               alt: "Numbered feature section labels: Capture, Answer, Schedule",
             },
             {
               text: "Three pricing tiers that are nearly identical except for how usage is billed, with the middle option flagged 'Most popular' to anchor the decision. For a buyer who's never purchased SaaS before, fewer real choices means less chance of walking away undecided.",
-              media: "./assets/projects/ui-ux/pulse/pricing.png", // PLACEHOLDER — crop of the pricing table with the "Most popular" tier
+              media: "./assets/projects/ui-ux/pulse/pricing.webp", // PLACEHOLDER — crop of the pricing table with the "Most popular" tier
               alt: "Three-tier pricing table with the middle plan marked Most Popular",
             },
           ],
@@ -263,7 +262,7 @@ const DATA = {
 
           // Universal for every UI/UX case study — see BizUp entry for
           // sizing guidance (~2160x1080, 2:1 ratio).
-          mockup: "./assets/projects/ui-ux/furniture/furniture-mockup.png", // PLACEHOLDER
+          mockup: "./assets/projects/ui-ux/furniture/furniture-mockup.webp", // PLACEHOLDER
 
           // Each highlight pairs one real decision with a small detail crop
           // that proves it — not a full page screenshot.
@@ -271,7 +270,7 @@ const DATA = {
             {
               text: "The hero pairs a full-bleed, sunlit lifestyle photo with an oversized 'Balance' wordmark — clamped between 136px and 240px, set at 18% white opacity, pinned to the bottom-right corner. It reads as a watermark, not a headline, so the photography stays the focal point.",
               media:
-                "./assets/projects/ui-ux/furniture/urniture-detail-hero-wordmark.png", // PLACEHOLDER — crop of the hero photo + translucent wordmark
+                "./assets/projects/ui-ux/furniture/urniture-detail-hero-wordmark.webp", // PLACEHOLDER — crop of the hero photo + translucent wordmark
               alt: "Oversized translucent 'Balance' wordmark over the hero photograph",
             },
             {
@@ -289,7 +288,7 @@ const DATA = {
             {
               text: "The about section swaps a real embedded video for a clickable thumbnail with a custom play button — keyboard-focusable, matching the product photography until it's actually pressed. The page stays light on load without the section feeling static.",
               media:
-                "./assets/projects/ui-ux/furniture/furniture-detail-about-video.png", // PLACEHOLDER — crop of the about video thumbnail + play button
+                "./assets/projects/ui-ux/furniture/furniture-detail-about-video.webp", // PLACEHOLDER — crop of the about video thumbnail + play button
               alt: "About section video thumbnail with custom play button overlay",
             },
           ],
@@ -337,7 +336,7 @@ const DATA = {
             "WTE (What To Eat) is a self-directed concept project for a recipe and meal-planning app, built from an idea I genuinely wanted to exist. I owned the whole process end to end: competitive research, user interviews, three personas, information architecture, wireframes and usability testing, a full style guide, and final UI screens.",
 
           // Recommended export: ~2160x1080 (2:1 ratio).
-          mockup: "./assets/projects/ui-ux/wte/wte-cover.jpg",
+          mockup: "./assets/projects/ui-ux/wte/wte-cover.webp",
 
           overview: [
             {
@@ -397,7 +396,7 @@ const DATA = {
                 { label: "Location", value: "Belgrade, Serbia" },
                 { label: "Job title", value: "Architect" },
               ],
-              photo: "./assets/projects/ui-ux/wte/wte-persona-kristina.png",
+              photo: "./assets/projects/ui-ux/wte/wte-persona-kristina.webp",
               color: "#F54670",
               goals: [
                 "Find a unique and adjustable menu",
@@ -432,7 +431,7 @@ const DATA = {
                 { label: "Location", value: "Novi Sad, Serbia" },
                 { label: "Job title", value: "Programmer" },
               ],
-              photo: "./assets/projects/ui-ux/wte/wte-persona-marco.png",
+              photo: "./assets/projects/ui-ux/wte/wte-persona-marco.webp",
               color: "#00E6C0",
               goals: [
                 "A simplified way to make sure he gets all the nutrients he needs",
@@ -468,7 +467,7 @@ const DATA = {
                 { label: "Location", value: "Anywhere, Serbia" },
                 { label: "Job title", value: "Adventurist" },
               ],
-              photo: "./assets/projects/ui-ux/wte/wte-persona-kosta.png",
+              photo: "./assets/projects/ui-ux/wte/wte-persona-kosta.webp",
               color: "#FFD243",
               goals: [
                 "Needs amazing, pack-full taste on the go",
@@ -502,31 +501,31 @@ const DATA = {
               label: "information architecture",
               caption:
                 "A sitemap was built to illustrate the app's navigation structure and determine the scope of key screens for the next phase.",
-              image: "./assets/projects/ui-ux/wte/wte-sitemap.jpg",
+              image: "./assets/projects/ui-ux/wte/wte-sitemap.webp",
             },
             {
               label: "wireframes, prototype & testing",
               caption:
                 "Quick wireframe sketches were turned into a low-fidelity digital prototype and put through usability testing, which uncovered small vulnerabilities and points of friction — learnings that led to further revisions of the interface and structure.",
-              image: "./assets/projects/ui-ux/wte/wte-wireframes.jpg",
+              image: "./assets/projects/ui-ux/wte/wte-wireframes.webp",
             },
             {
               label: "mood board",
               caption:
                 "Several mood boards were created to get a feel for the visual direction. The one selected gave the app a friendly, playful tone, with imagery that feels impressive yet approachable.",
-              image: "./assets/projects/ui-ux/wte/wte-moodboard.jpg",
+              image: "./assets/projects/ui-ux/wte/wte-moodboard.webp",
             },
             {
               label: "ui elements",
               caption:
                 "A small UI kit — buttons, switches, tab bars, navigation, and audio/video player controls — kept the interface consistent across every screen.",
-              image: "./assets/projects/ui-ux/wte/wte-ui-elements.jpg",
+              image: "./assets/projects/ui-ux/wte/wte-ui-elements.webp",
             },
             {
               label: "photography direction",
               caption:
                 "Delicious food should always be the main focus of the photo. WTE's food photography needed to feel inspiring, modern, and fresh — the kind of images that make people crave what's on screen. Spontaneous shots of whatever you just cooked are always welcome too.",
-              image: "./assets/projects/ui-ux/wte/wte-photography.jpg",
+              image: "./assets/projects/ui-ux/wte/wte-photography.webp",
             },
           ],
 
@@ -585,31 +584,31 @@ const DATA = {
             {
               title: "Home",
               text: "At the top of the home screen sits the day's main recipe recommendation, which can be swapped for something else entirely. If you have something more specific in mind, it can be found through search, by browsing different recipes, or through the trending list below.",
-              media: "./assets/projects/ui-ux/wte/wte-final-home.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/wte/wte-final-home.webp", // PLACEHOLDER
               alt: "Home screen with daily recipe recommendation and trending recipes",
             },
             {
               title: "Sorting menu",
               text: "A sorting menu gives a quick, easy way to scan recipes — see what's new, what's trending, or what's been picked just for you.",
-              media: "./assets/projects/ui-ux/wte/wte-final-sorting.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/wte/wte-final-sorting.webp", // PLACEHOLDER
               alt: "Sorting menu with latest, trending, recommended, and featured options",
             },
             {
               title: "Recipe detail page",
               text: "Save and share recipes, or add your own notes. Adjust servings, and add single ingredients, or all of them, straight to the built-in shopping list. Every recipe can be followed step by step, in either video or picture format.",
-              media: "./assets/projects/ui-ux/wte/wte-final-recipe-detail.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/wte/wte-final-recipe-detail.webp", // PLACEHOLDER
               alt: "Recipe detail page with ingredients, directions, and shopping-list button",
             },
             {
               title: "Shopping list",
               text: "The shopping list is easy to navigate — sorted by aisle or by recipe. Sorting by aisle groups groceries under illustrated category icons; sorting by recipe lists everything needed below each dish's name and photo, so it stays easy to track across more than one recipe at a time. Lists can be shared, or a participant added, and groceries can always be swapped from the list if something isn't available.",
-              media: "./assets/projects/ui-ux/wte/wte-final-shopping-list.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/wte/wte-final-shopping-list.webp", // PLACEHOLDER
               alt: "Shopping list sorted by aisle and by recipe",
             },
             {
               title: "Keep your device clean",
               text: "A hands-free mode can be switched on while cooking — controlled by voice, or by disabling screen lock — so there's no need to touch the device with messy hands while a dish is coming together.",
-              media: "./assets/projects/ui-ux/wte/wte-final-device-clean.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/wte/wte-final-device-clean.webp", // PLACEHOLDER
               alt: "Hands-free cooking mode with voice control and anti-screen-lock toggle",
             },
           ],
@@ -626,7 +625,7 @@ const DATA = {
             "Pawzy is a pet-shop e-commerce case study, designed around how dog and cat owners actually shop online — food, treats, and accessories. The project covered the full process: user and survey research, an empathy map and customer journey, information architecture, wireframes and a style guide, through to final UI screens for browsing, product detail, and checkout.",
 
           // Recommended export: ~2160x1080 (2:1 ratio).
-          mockup: "./assets/projects/ui-ux/pawzy/pawzy-cover.jpg",
+          mockup: "./assets/projects/ui-ux/pawzy/pawzy-cover.webp",
 
           overview: [
             {
@@ -705,45 +704,45 @@ const DATA = {
               label: "survey research results",
               caption:
                 "A short survey (10–11 responses) covering diet, spending, and feature interest. Key takeaways: finding ingredient information on packaging and allergy-friendly food is genuinely hard; most owners spend upwards of 2,500 dinars a month on their pet; there's strong interest (over 90%) in a monthly food subscription and in a Pawzy Loyalty program; a vet chat feature and order tracking both rated highly useful; and pet clothing is a rarely-bought online category.",
-              image: "./assets/projects/ui-ux/pawzy/pawzy-survey-results.jpg",
+              image: "./assets/projects/ui-ux/pawzy/pawzy-survey-results.webp",
             },
             {
               label: "empathy map",
               caption:
                 "An empathy map built around a pet owner considering organic food — what they hear, see, think, say, and do. Recurring pain points: organic food is hard to find (and hard to trust as genuinely organic), there's no time to cook for the pet, and ingredient labeling is hard to verify. The clear gain: detailed, trustworthy ingredient information at a reasonable price.",
-              image: "./assets/projects/ui-ux/pawzy/pawzy-empathy-map.jpg",
+              image: "./assets/projects/ui-ux/pawzy/pawzy-empathy-map.webp",
             },
             {
               label: "information architecture",
               caption:
                 "A customer journey mapped across five stages — Awareness, Consideration, Purchase, Onboarding, and Advocacy — pairing user actions and touchpoints with emotions, pain points, and possible solutions at each step. Recurring friction: too many products within a category, re-entering payment details, and not knowing when a subscription renews or a delivery will arrive — addressed with filters, saved payment/delivery details, renewal reminders, and package tracking.",
-              image: "./assets/projects/ui-ux/pawzy/pawzy-journey-map.jpg",
+              image: "./assets/projects/ui-ux/pawzy/pawzy-journey-map.webp",
             },
             {
               label: "product categories",
               caption:
                 "A full taxonomy for dogs and cats — age brackets, product types (food, treats, accessories, care), and special-care diets (sensitive, anti-allergic, freshly cooked, vegan, supplements) — used to drive the category filters across the site.",
               image:
-                "./assets/projects/ui-ux/pawzy/pawzy-product-categories.jpg",
+                "./assets/projects/ui-ux/pawzy/pawzy-product-categories.webp",
             },
             {
               label: "user flow",
               caption:
                 "The primary purchase flow — from home through product discovery and ingredient-checking, into the cart, sign-in, and checkout, ending at delivery confirmation.",
-              image: "./assets/projects/ui-ux/pawzy/pawzy-user-flow.jpg",
+              image: "./assets/projects/ui-ux/pawzy/pawzy-user-flow.webp",
             },
             {
               label: "sketches & wireframes",
               caption:
                 "Early pen-and-paper sketches for the homepage, category, and product pages, refined into low-fidelity wireframes covering the homepage, category page, product page, and checkout flow.",
               image:
-                "./assets/projects/ui-ux/pawzy/pawzy-sketches-wireframes.jpg",
+                "./assets/projects/ui-ux/pawzy/pawzy-sketches-wireframes.webp",
             },
             {
               label: "mood board",
               caption:
                 "A mood board of warm pet photography, packaging references, and color and type exploration that shaped the final visual direction.",
-              image: "./assets/projects/ui-ux/pawzy/pawzy-moodboard.jpg",
+              image: "./assets/projects/ui-ux/pawzy/pawzy-moodboard.webp",
             },
           ],
 
@@ -785,25 +784,25 @@ const DATA = {
             {
               title: "Homepage",
               text: "A simple, consistently-positioned header lets users navigate the rest of the site from anywhere. The homepage surfaces new and most-wanted products, a monthly-subscription and freshly-cooked-meals option, helpful tips and fun facts, a vet consult, and customer reviews to build trust. The search bar opens below the header on demand, and the Dog/Cat navigation works as a drop-down to sub-categories.",
-              media: "./assets/projects/ui-ux/pawzy/pawzy-final-homepage.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/pawzy/pawzy-final-homepage.webp", // PLACEHOLDER
               alt: "Pawzy homepage with hero banner, featured products, and subscription offer",
             },
             {
               title: "Category page",
               text: "Nine products per page keeps users from scrolling long lists. Products can be filtered by age, availability, special care, or taste, and sorted by newest, price, or popularity — with a recommendation section below based on previous searches. A product stands out on hover and can be added to cart immediately, and a top-page arrow plus shop chat sit on the right of every page.",
-              media: "./assets/projects/ui-ux/pawzy/pawzy-final-category.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/pawzy/pawzy-final-category.webp", // PLACEHOLDER
               alt: "Pawzy category page with filters and a 9-product grid",
             },
             {
               title: "Product page",
               text: "Clear product images pair with a specification segment split into three sections — about the product, ingredients, and reviews — plus recommended and previously-viewed products. Users can choose size and quantity, and pick between a one-time purchase or a monthly delivery.",
-              media: "./assets/projects/ui-ux/pawzy/pawzy-final-product.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/pawzy/pawzy-final-product.webp", // PLACEHOLDER
               alt: "Pawzy product detail page with size, quantity, and delivery options",
             },
             {
               title: "Cart & checkout",
               text: "Products in the cart can be edited without leaving the page. Checkout steps through delivery details and payment (card or cash) with a progress indicator, and users can always go back a step without losing what they've already entered, ending in an order confirmation.",
-              media: "./assets/projects/ui-ux/pawzy/pawzy-final-checkout.jpg", // PLACEHOLDER
+              media: "./assets/projects/ui-ux/pawzy/pawzy-final-checkout.webp", // PLACEHOLDER
               alt: "Pawzy cart and checkout flow with delivery details and payment step",
             },
           ],
@@ -824,7 +823,7 @@ const DATA = {
           short: "browser game — javascript / canvas",
           description:
             "A browser-based Space Invaders remake — HTML5 canvas rendering, wave-based enemy progression, a boss fight, and full touch controls, built entirely in vanilla JavaScript with no game engine.",
-          image: "./assets/thumbnails/spaceinvaders-thumbnail.gif", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/spaceinvaders-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
 
           context:
             "Browser game, built to learn canvas rendering and game-loop fundamentals from scratch — no engine, no framework. It's fully playable below: wave-based enemy progression, a boss encounter, every sound effect synthesized live, and on-screen touch controls so it plays on both desktop and mobile.",
@@ -869,7 +868,7 @@ const DATA = {
           short: "browser game — javascript / canvas",
           description:
             "An Icy Tower–style climbing game — run to build speed, jump higher the faster you're going, and bounce off walls to keep climbing, rendered entirely on canvas with hand-drawn character art.",
-          image: "./assets/thumbnails/frosttower-thumbnail.gif", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/frosttower-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
 
           context:
             "My take on Icy Tower, the classic speed-climbing platformer — built the same way as Space Invaders: no engine, just canvas and vanilla JavaScript. It's fully playable below: run to build speed, jump to fly higher the faster you're going, bounce off walls mid-air, and climb as many floors as you can before you fall.",
@@ -886,7 +885,7 @@ const DATA = {
             {
               title: "Jump height is real physics, not a fixed animation",
               text: "The core mechanic — run to build speed, then jump higher the faster you're going — comes from tuned physics constants: gravity, a base jump velocity, a speed bonus added per px/s of run speed, and a jump-cut multiplier for variable jump height when you release early.",
-              media: "./assets/projects/code/frost-tower/frost-tower-jump.gif", // PLACEHOLDER
+              media: "./assets/projects/code/frost-tower/frost-tower-jump.webp", // PLACEHOLDER
               alt: "Player mid-jump between platforms, climbing the tower",
             },
             {
@@ -931,10 +930,10 @@ const DATA = {
           short: "project visual and packaging design *agency work",
           description:
             "A full brand identity system developed for a sustainable lifestyle startup — covering logomark, wordmark, colour palette, typography hierarchy, and brand guidelines.",
-          image: "./assets/thumbnails/knjaz-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/knjaz-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
           gallery: [
             "./assets/projects/design/knjaz-video.mp4", // PLACEHOLDER — video, 16:9
-            "./assets/projects/design/knjaz-project.jpg", // PLACEHOLDER — 1920x1080, 16:9
+            "./assets/projects/design/knjaz-project.webp", // PLACEHOLDER — 1920x1080, 16:9
           ],
         },
         {
@@ -943,10 +942,10 @@ const DATA = {
           short: "product packaging *agency work",
           description:
             "Packaging concept for an artisan coffee roaster. The design draws on mid-century illustration techniques combined with a clean, contemporary grid.",
-          image: "./assets/thumbnails/doncafe-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/doncafe-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
           gallery: [
             "./assets/projects/design/doncafe-video.mp4", // PLACEHOLDER — video, 16:9
-            "./assets/projects/design/doncafe-project.png", // PLACEHOLDER — 1920x1080, 16:9
+            "./assets/projects/design/doncafe-project.webp", // PLACEHOLDER — 1920x1080, 16:9
           ],
         },
         {
@@ -958,7 +957,7 @@ const DATA = {
           image: "./assets/thumbnails/sofronijevic-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
           gallery: [
             "./assets/projects/design/sofronijevic-video.mp4", // PLACEHOLDER — video, 16:9
-            "./assets/projects/design/sofronijevic-project.jpg", // PLACEHOLDER — 1920x1080, 16:9
+            "./assets/projects/design/sofronijevic-project.webp", // PLACEHOLDER — 1920x1080, 16:9
           ],
         },
         {
@@ -967,10 +966,10 @@ const DATA = {
           short: "product packaging *agency work",
           description:
             "A series of seven posters created for an annual design festival, each exploring a different visual language while maintaining a coherent system.",
-          image: "./assets/thumbnails/akvaviva-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/akvaviva-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
           gallery: [
             "", // PLACEHOLDER — video, 16:9
-            "./assets/projects/design/junior-project.png", // PLACEHOLDER — 1920x1080, 16:9
+            "./assets/projects/design/junior-project.webp", // PLACEHOLDER — 1920x1080, 16:9
           ],
         },
         {
@@ -979,10 +978,10 @@ const DATA = {
           short: "logo & design system",
           description:
             "Short-form motion graphics package for a tech brand launch, covering intro animations, lower thirds, and social content assets.",
-          image: "./assets/thumbnails/crox-thumbnail.png", // PLACEHOLDER — 1200x900, 4:3
+          image: "./assets/thumbnails/crox-thumbnail.webp", // PLACEHOLDER — 1200x900, 4:3
           gallery: [
             "./assets/projects/design/crox-animation.mp4", // PLACEHOLDER — video, 16:9
-            "./assets/projects/design/crox-project.jpg", // PLACEHOLDER — 1920x1080, 16:9
+            "./assets/projects/design/crox-project.webp", // PLACEHOLDER — 1920x1080, 16:9
           ],
         },
         // {
