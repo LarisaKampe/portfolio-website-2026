@@ -908,12 +908,45 @@ const DATA = {
         },
         {
           id: 3,
-          name: "web app",
-          short: "next.js / supabase",
+          name: "Mud Duel",
+          short: "browser game — javascript / canvas",
           description:
-            "A collaborative task management web app built with Next.js and Supabase, featuring real-time updates, role-based access, and a fully responsive interface.",
-          image: "",
-          media: "",
+            "A one-on-one mud-slinging duel — slingshot-aim your throws over the fence, scoop fresh mud from your puddle, duck behind cover, and fill your rival's mud meter before they fill yours. Best of three rounds, with a smarter rival every match.",
+          image: "./assets/thumbnails/mudduel-thumbnail.jpg",
+
+          context:
+            "An artillery-style duel game, built the same way as Space Invaders and Frost Tower: no engine, just canvas and vanilla JavaScript. It's fully playable below: drag to aim and throw like a slingshot, scoop mud to reload, hide behind your rock as it wears down, and win two rounds to take the match — each win brings a tougher rival.",
+
+          embed: {
+            url: "https://mud-duel.netlify.app/",
+            aspectRatio: "16 / 9",
+            label: "play mud duel",
+          },
+
+          // Technical highlights, not design ones — media are gameplay
+          // screenshots captured from the live build.
+          highlights: [
+            {
+              title: "Slingshot aiming with a live trajectory preview",
+              text: "Press on the field, pull back and let go — drag distance maps to release speed and drag angle to aim, with a dotted arc previewing the throw. The keyboard gets the same throw through arrow-key aiming and a hold-to-charge Space bar, all running on a fixed-timestep engine so physics behave identically at any frame rate.",
+              media: "./assets/projects/code/mud-duel/mud-duel-slingshot.jpg",
+              alt: "Player winding up a throw with a dotted trajectory arc toward the rival",
+            },
+            {
+              title: "Rigged characters that actually get muddy",
+              text: "Each fighter is six hand-drawn SVG parts joined at pivots and posed by rotation — idle, run, wind-up, throw, hit. Every hit paints a seeded mud splat onto the exact body part it struck, so the characters visibly get dirtier as the round goes on, and missed throws leave splats baked into the ground.",
+              media: "./assets/projects/code/mud-duel/mud-duel-splats.jpg",
+              alt: "Both fighters splattered with mud as the round ends",
+            },
+            {
+              title: "A rival AI that levels up with you",
+              text: "The opponent moves around its half, hides behind its rock, refills at its puddle, predicts where your shots will land and sometimes dodges — and it always winds up visibly before throwing, so you can react. Every match won raises its level: faster throws, tighter aim, more dodges. Your best level is saved locally.",
+              media: "./assets/projects/code/mud-duel/mud-duel-rival.jpg",
+              alt: "Rival character taking cover behind its rock across the fence",
+            },
+          ],
+
+          links: { live: "https://mud-duel.netlify.app/" },
         },
       ],
     },
