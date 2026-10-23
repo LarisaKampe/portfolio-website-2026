@@ -46,7 +46,9 @@ function icon(key) {
 
 // Safe for use inside a double-quoted HTML attribute
 function attr(text) {
-  return String(text ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+  return String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;");
 }
 
 // Make a non-button element (card) behave like a button for keyboard
@@ -170,7 +172,9 @@ function renderHighlightRows(items, modifier) {
       `;
     })
     .join("");
-  const wrapperClass = modifier ? `proj-highlights ${modifier}` : "proj-highlights";
+  const wrapperClass = modifier
+    ? `proj-highlights ${modifier}`
+    : "proj-highlights";
   return `<div class="${wrapperClass}">${rows}</div>`;
 }
 
@@ -717,17 +721,6 @@ function buildHomePage() {
   clientsSection.appendChild(row);
   page.appendChild(clientsSection);
 
-  // About section
-  const aboutEl = document.createElement("div");
-  aboutEl.className = "home-about";
-  aboutEl.innerHTML = `<h2 class="section-title">about</h2>`;
-  owner.about.forEach((para) => {
-    const p = document.createElement("p");
-    p.textContent = para;
-    aboutEl.appendChild(p);
-  });
-  page.appendChild(aboutEl);
-
   // Contact section
   const contactEl = document.createElement("div");
   contactEl.className = "home-contact";
@@ -946,7 +939,9 @@ function renderCategoryPage(key, scrollToProject = false) {
   if (scrollToProject) {
     projectSection.scrollIntoView({
       behavior:
-        scrollToProject === "instant" || prefersReducedMotion() ? "instant" : "smooth",
+        scrollToProject === "instant" || prefersReducedMotion()
+          ? "instant"
+          : "smooth",
       block: "start",
     });
   }
@@ -961,14 +956,18 @@ function renderCategoryPage(key, scrollToProject = false) {
 // (the pressed nav button, or else the project title) and announce it
 function focusProject(key, buttonId) {
   const cat = DATA.categories.find((c) => c.key === key);
-  const idx = cat.projects.findIndex((p) => p.id === state.selectedProject[key]);
+  const idx = cat.projects.findIndex(
+    (p) => p.id === state.selectedProject[key],
+  );
   const btn = buttonId && document.getElementById(buttonId);
   const target =
     btn && !btn.disabled
       ? btn
       : document.querySelector(`#page-${key} .proj-detail-title`);
   target?.focus({ preventScroll: true });
-  announce(`${cat.projects[idx].name}, project ${idx + 1} of ${cat.projects.length}`);
+  announce(
+    `${cat.projects[idx].name}, project ${idx + 1} of ${cat.projects.length}`,
+  );
 }
 
 /* ─── ABOUT ME PAGE ─────────────────────────────── */
@@ -1019,7 +1018,8 @@ function navigate(pageKey, pushHistory = true) {
 
   // After a user-initiated page change, move focus to the new page's
   // heading so screen-reader and keyboard users start at the top of it
-  if (pushHistory) target?.querySelector(".page-title")?.focus({ preventScroll: true });
+  if (pushHistory)
+    target?.querySelector(".page-title")?.focus({ preventScroll: true });
 }
 
 // Polite screen-reader announcement (e.g. "Pawzy, project 5 of 5")
@@ -1073,8 +1073,13 @@ const SITE_NAME = "Larisa Kampe";
 
 // Plain text, trimmed to a search-snippet-friendly length
 function snippet(text, max = 155) {
-  const plain = String(text ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-  return plain.length > max ? plain.slice(0, max - 1).replace(/\s+\S*$/, "") + "…" : plain;
+  const plain = String(text ?? "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return plain.length > max
+    ? plain.slice(0, max - 1).replace(/\s+\S*$/, "") + "…"
+    : plain;
 }
 
 function setMeta(selector, value) {
@@ -1151,7 +1156,10 @@ function initScrollTop() {
   });
 
   btn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "instant" : "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion() ? "instant" : "smooth",
+    });
     // Bring keyboard focus back to the top too, not just the view
     document
       .querySelector(".page.active .page-title")
